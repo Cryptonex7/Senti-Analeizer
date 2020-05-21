@@ -2,11 +2,25 @@ import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import logo from "./assets/logo.svg";
 import "./App.css";
-import { Divider } from "@material-ui/core";
+import { Divider, Button } from "@material-ui/core";
 
 function App() {
   const [text, setText] = useState();
-  const exampleOutput = text ? "Positive" : "Enter Text to Analyse Sentiment";
+  const [op, setOp] = useState("Enter Text to Analyse Sentiment");
+
+  const handleSubmit = () => {
+    fetch("https://jsonplaceholder.typicode.com/posts/", {
+      method: "POST",
+      body: {
+        userId: 69,
+        id: 69,
+        title: `AtharvU1 - the Koder ${text}`,
+        body: "Maine Utkarsh ke Mame wala Powder Gaal pe lagaya hai...",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => setOp(json.id));
+  };
 
   return (
     <div className="App">
@@ -18,8 +32,8 @@ function App() {
         <div className="container">
           <TextField
             fullWidth
-            variant="outlined"
             onChange={(e) => setText(e.target.value)}
+            variant="outlined"
             label="Enter Sentiment"
             className="input"
           />
@@ -29,7 +43,9 @@ function App() {
           <Divider />
           <br />
 
-          <div className="output">{exampleOutput}</div>
+          <div className="output">{op}</div>
+
+          <Button onClick={handleSubmit}>Submit</Button>
         </div>
       </header>
     </div>
