@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 20vmin;
   pointer-events: none;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background: url(./assets/bkg.svg);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -26,6 +26,22 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 300px;
+}
+
+.input {
+  font-size: 26px;
+}
+
+.output {
+  font-size: 16px;
 }
 
 @keyframes App-logo-spin {
