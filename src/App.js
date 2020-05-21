@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
+import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
 import logo from "./assets/logo.svg";
 import "./App.css";
-import { Divider, Button } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 
 function App() {
-  const [text, setText] = useState();
+  const [text, setText] = useState("");
+  const [pending, setPending] = useState(false);
   const [op, setOp] = useState("Enter Text to Analyse Sentiment");
 
   const handleSubmit = () => {
+    setPending(true);
     fetch("https://jsonplaceholder.typicode.com/posts/", {
       method: "POST",
       body: {
@@ -19,7 +23,10 @@ function App() {
       },
     })
       .then((response) => response.json())
-      .then((json) => setOp(json.id));
+      .then((json) => {
+        setOp(json.id);
+        setPending(false);
+      });
   };
 
   return (
@@ -43,9 +50,19 @@ function App() {
           <Divider />
           <br />
 
-          <div className="output">{op}</div>
+          {pending ? <CircularProgress /> : <div className="output">{op}</div>}
 
-          <Button onClick={handleSubmit}>Submit</Button>
+          <br />
+          <br />
+
+          <Button
+            disabled={!text.length}
+            onClick={handleSubmit}
+            variant="outlined"
+            color="primary"
+          >
+            Submit
+          </Button>
         </div>
       </header>
     </div>
